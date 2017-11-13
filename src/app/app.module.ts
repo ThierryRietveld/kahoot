@@ -8,10 +8,12 @@ import { DataService } from './services/data.service';
 
 import { AppComponent } from './app.component';
 import { UserComponent } from './components/user/user.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 const appRoutes: Routes = [
   { path: 'user', component: UserComponent },
+  { path: 'home', component: HomeComponent },
   // { path: 'hero/:id',      component: HeroDetailComponent },
   // {
   //   path: 'heroes',
@@ -19,7 +21,7 @@ const appRoutes: Routes = [
   //   data: { title: 'Heroes List' }
   // },
   { path: '',
-    redirectTo: '/user',
+    redirectTo: '/home',
     pathMatch: 'full'
   },
   { path: '**', component: PageNotFoundComponent }
@@ -29,7 +31,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     UserComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    HomeComponent
   ],
   imports: [
     HttpClientModule,
