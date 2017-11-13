@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
- 
+
+import { DataService } from '../../services/data.service';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -9,9 +11,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UserComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private data:DataService
+            ) { }
 
   ngOnInit() {
+      this.data.saySomething('De service werkt gewoon!');
   }
 
   creatPost(){
