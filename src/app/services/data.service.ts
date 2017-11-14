@@ -4,25 +4,28 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class DataService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   private isLoggedIn = false;
   private postData;
 
-  LogIn(username, password){
+  LogIn(username, password) {
     this.postData = {
       name: username,
       pass: password
     }
 
     this.http.post('http://localhost:4201/login', this.postData)
-    .subscribe(data => {
-      // Read the result field from the JSON response.
-      console.log(data[0])
-    });
+      .subscribe(data => {
+        if (data[0]) {
+          console.log("logged in");
+        } else {
+          console.log("Opbokke");
+        }
+      });
   }
 
-  saySomething(text){
+  saySomething(text) {
     console.log(text);
   }
 }
