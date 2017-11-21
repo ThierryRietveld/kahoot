@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { DataService } from '../../services/data.service';
 
@@ -25,6 +25,8 @@ export class HomeComponent implements OnInit {
     }
     this.dataService.LogIn(this.username,this.password);
   }
+  
+  
 
   
 

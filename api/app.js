@@ -61,10 +61,15 @@ app.post('/register', function(req, res){
     let infix = req.body.infix;
     let lastname = req.body.lastname;
     let email = req.body.email;
-    let password = req.body.password;
+    let password = sha1(req.body.password);
     let activated = 0;
-    con.query("INSERT INTO `users` VALUES ('"+username+"','"+firstname+"','"+infix+"','"+lastname+"','"+email+"','"+sha1(password)+"','"+activated+"'", function(err, result, fields){
-        
+
+    makeid(function(id){
+        con.query("INSERT INTO `users` VALUES ("+id+",'"+username+"','"+firstname+"','"+infix+"','"+lastname+"','"+email+"','"+password+"',"+activated+")", function(err, result, fields){
+            if (err) throw err;
+            res.send([{completed: true}]);
+            console.log("Worked");
+        });
     });
 });
 
@@ -106,7 +111,3 @@ function makeid(callback) {
         } 
     });
 }
-
-makeid(function(text){
-    console.log(text);
-});

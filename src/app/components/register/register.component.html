@@ -1,0 +1,45 @@
+<form [formGroup]="rForm" (ngSubmit)="submitForm(rForm.value)">
+  <div class="form-container">
+    <div class="row columns">
+
+      <h1>My Reactive Form</h1>
+
+      <label>Username
+        <input type="text" formControlName="username">
+      </label>
+      <div class="alert" *ngIf="!rForm.controls['username'].valid && rForm.controls['username'].touched">Tis is required</div>
+
+      <label>Firstname
+        <input type="text" formControlName="firstname">
+      </label>
+      <div class="alert" *ngIf="!rForm.controls['firstname'].valid && rForm.controls['firstname'].touched">You must specify a description that's between 30 and 500 characters.</div>
+
+      <label>Infix
+        <input type="text" formControlName="infix">
+      </label>
+      <div class="alert" *ngIf="!rForm.controls['infix'].valid && rForm.controls['infix'].touched">You must specify a description that's between 30 and 500 characters.</div>
+
+      <label>Lastname
+        <input type="text" formControlName="lastname">
+      </label>
+      <div class="alert" *ngIf="!rForm.controls['lastname'].valid && rForm.controls['lastname'].touched">You must specify a description that's between 30 and 500 characters.</div>
+
+      <label>E-mail
+        <input type="text" formControlName="email">
+      </label>
+      <div class="alert" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">You must specify a description that's between 30 and 500 characters.</div>
+
+      <label>Password
+        <input type="password" formControlName="password">
+      </label>
+      <div class="alert" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">You must specify a description that's between 30 and 500 characters.</div>
+
+      <label>Confirm password
+        <input type="password" formControlName="passwordConfirm">
+      </label>
+      <div class="alert" *ngIf="!rForm.controls['passwordConfirm'].valid && rForm.controls['passwordConfirm'].touched">You must specify a description that's between 30 and 500 characters.</div>
+
+      <input type="submit" class="button expanded" value="Submit Form" [disabled]="!rForm.valid">
+    </div>
+  </div>
+</form>
