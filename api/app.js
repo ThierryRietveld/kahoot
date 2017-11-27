@@ -56,6 +56,8 @@ app.post('/login', function(req, res){
 });
 
 app.post('/register', function(req, res){
+    console.log(req.body);
+
     let username = req.body.username;
     let firstname = req.body.firstname;
     let infix = req.body.infix;

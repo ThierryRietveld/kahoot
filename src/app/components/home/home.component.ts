@@ -12,22 +12,10 @@ export class HomeComponent implements OnInit {
 
   constructor(private dataService:DataService) {  }
 
-  username = "";
-  password = "";
+  
 
   ngOnInit() {
     
   }
-
-  LogIn(){
-    if(this.username == "" || this.password == ""){
-      return;
-    }
-    this.dataService.LogIn(this.username,this.password);
-  }
-  
-  
-
-  
 
 }

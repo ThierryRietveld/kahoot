@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
     // if(this.username == "" || this.firstname == "" || this.lastname == "" || this.email == "" || this.password == ""){
     //   return;
     // }
-    // this.dataService.Register(this.username,this.firstname,this.infix,this.lastname,this.email,this.password,this.passwordConfirm);
+    this.dataService.Register(formPost.username,formPost.firstname,formPost.infix,formPost.lastname,formPost.email,formPost.password,formPost.passwordConfirm);
   }
 
 }

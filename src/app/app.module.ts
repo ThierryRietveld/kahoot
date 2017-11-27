@@ -11,12 +11,14 @@ import { AppComponent } from './app.component';
 import { UserComponent } from './components/user/user.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 const appRoutes: Routes = [
   { path: 'user', component: UserComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
 
   // { path: 'hero/:id',      component: HeroDetailComponent },
   // {
@@ -37,7 +39,8 @@ const appRoutes: Routes = [
     UserComponent,
     PageNotFoundComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     HttpClientModule,
