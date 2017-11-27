@@ -1,9 +1,11 @@
-var express = require('express');
-var app = express();
-var mysql = require('mysql');
-var bodyParser = require('body-parser');
-var sha1 = require('sha1');
-var port = 4201;
+const express = require('express');
+const app = express();
+const http = require('http').Server(app);
+const mysql = require('mysql');
+const bodyParser = require('body-parser');
+const sha1 = require('sha1');
+const io = require('socket.io');
+const port = 4201;
 
 // Body-parser
 app.use(bodyParser.urlencoded({
@@ -33,6 +35,11 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
+
+io.on('connection', function(socket){
+    console.log('a user connected');
+});
+  
 
 // MySql Connection
 var con = mysql.createConnection({
