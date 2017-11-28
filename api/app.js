@@ -4,8 +4,12 @@ const http = require('http').Server(app);
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const sha1 = require('sha1');
-const io = require('socket.io');
+const io = require('socket.io')(http);
 const port = 4201;
+
+io.on('connection', function(socket){
+    console.log(socket);
+});
 
 // Body-parser
 app.use(bodyParser.urlencoded({
@@ -36,10 +40,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-io.on('connection', function(socket){
-    console.log('a user connected');
-});
-  
+
 
 // MySql Connection
 var con = mysql.createConnection({
@@ -89,10 +90,9 @@ app.get('/get_users', function(req, res){
     });
 });
 
-app.listen(4201, function(){
+http.listen(4201, function(){
     console.log("App on port "+ port);
 });
-
 
 function makeid(callback) {
     var text = "";

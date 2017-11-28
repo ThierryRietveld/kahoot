@@ -14,6 +14,7 @@
     "http": "0.0.0",
     "mysql": "^2.15.0",
     "sha1": "^1.1.1",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.0.4",
+    "socket.io-ioredis": "^1.4.1"
   }
 }
