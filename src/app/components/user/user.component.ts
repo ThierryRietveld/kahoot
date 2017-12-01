@@ -19,6 +19,10 @@ export class UserComponent implements OnInit {
       this.data.saySomething('De service werkt gewoon!');
   }
 
+  logOut(){
+    this.data.logOut();
+  }
+
   creatPost(){
     console.log("banaan");
     const data = {

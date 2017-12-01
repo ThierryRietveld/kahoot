@@ -8,8 +8,6 @@ const io = require('socket.io')(http);
 const fs = require('fs');
 const port = 4201;
 
-let users = "banaan";
-
 io.on('connection', function(socket){
     console.log("User connected");
 });

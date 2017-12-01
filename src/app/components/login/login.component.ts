@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { DataService } from '../../services/data.service';
 @Component({
@@ -11,9 +12,15 @@ export class LoginComponent implements OnInit {
   username = "";
   password = "";
 
-  constructor(private dataService:DataService) { }
+  constructor(private dataService:DataService,
+              private router:Router) { 
 
-  LogIn(){
+    if(localStorage.getItem("userId") === null || localStorage.getItem("userToken") === null){
+      this.router.navigate(["/home"]);
+    }
+  }
+
+  submitForm(formPost){
     if(this.username == "" || this.password == ""){
       return;
     }

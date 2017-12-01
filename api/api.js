@@ -44,7 +44,8 @@ app.post('/login', function(req, res){
     let password = req.body.pass;
     con.query("SELECT * FROM Users WHERE `username` = '"+username+"' AND `password` = '"+sha1(password)+"'", function (err, result, fields) {
         if (err) throw err;
-        res.send(result);
+        console.log(result);
+        res.send(result[0]);
     });
 });
 
@@ -60,11 +61,23 @@ app.post('/register', function(req, res){
     let activated = 0;
 
     makeid(function(id){
-        con.query("INSERT INTO `users` VALUES ("+id+",'"+username+"','"+firstname+"','"+infix+"','"+lastname+"','"+email+"','"+password+"',"+activated+")", function(err, result, fields){
-            if (err) throw err;
-            res.send([{completed: true}]);
-            console.log("Worked");
+        makeToken(function(token){
+            con.query("INSERT INTO `users` VALUES ("+id+",'"+token+"','"+username+"','"+firstname+"','"+infix+"','"+lastname+"','"+email+"','"+password+"',"+activated+")", function(err, result, fields){
+                if (err) throw err;
+                res.send([{completed: true}]);
+                console.log("Worked");
+            });
         });
+    });
+});
+
+app.post('/isloggedin',function(req,res){
+    let id = req.body.id;
+    let token = req.body.token;
+    console.log(req.body);
+    con.query("SELECT * FROM Users WHERE id = "+id+" AND token = '"+token+"' ", function (err, result, fields) {
+        if (err) throw err;
+        res.send(result);
     });
 });
 
@@ -100,4 +113,15 @@ function makeid(callback) {
             callback(text);
         } 
     });
+}
+
+function makeToken(callback) {
+    var text = "";
+    var possible = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    for (var i = 0; i < 8; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    console.log(text);
+    callback(text);
 }

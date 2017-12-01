@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataService } from './services/data.service';
+import { LoginGuard } from './guards/login.guard';
 
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AppComponent } from './app.component';
@@ -18,7 +19,9 @@ import { QuizPlayerComponent } from './components/games/quiz/quiz-player/quiz-pl
 
 
 const appRoutes: Routes = [
-  { path: 'home', component: UserComponent },
+  { path: 'home', component: UserComponent,
+  canActivate: [LoginGuard], 
+},
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
@@ -58,7 +61,8 @@ const appRoutes: Routes = [
     )
   ],
   providers: [ 
-    DataService
+    DataService,
+    LoginGuard
    ],
   bootstrap: [AppComponent]
 })
