@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import 'rxjs/add/operator/map';
+
 
 @Injectable()
 export class DataService {
@@ -38,29 +40,34 @@ export class DataService {
     this.router.navigate(["/login"]);
   }
 
+  exstractData(res:Response){
+    return res.json();
+  }
 
 
-  IsLoggedIn(callback) {
-    if(localStorage.getItem("userId") === null || localStorage.getItem("userToken") === null) {
+
+  IsLoggedIn() {
+    
+      // if(localStorage.getItem("userId") !== null && localStorage.getItem("userToken") !== null) {
+
 
       this.postData = {
         id: localStorage.getItem("userId"),
         token: localStorage.getItem("userToken")
       }
 
-      var ding;
+      console.log('boi');
 
-      this.http.post('http://localhost:4201/isloggedin', this.postData)
-      .subscribe(data => {
-        if (data[0]) {
-          ding = true;
-        } else {
-          ding = false;
-        }
-      });
+      return this.http.post('http://localhost:4201/isloggedin', this.postData)
+      .map(res => res);
 
-    }
-    callback(ding);
+      
+
+    // } 
+    // else {
+    //   return
+    // }
+
   }
 
   Register(user, first, infix, last, email, pass, passCon) {

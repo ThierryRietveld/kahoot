@@ -15,9 +15,6 @@ export class LoginComponent implements OnInit {
   constructor(private dataService:DataService,
               private router:Router) { 
 
-    if(localStorage.getItem("userId") === null || localStorage.getItem("userToken") === null){
-      this.router.navigate(["/home"]);
-    }
   }
 
   submitForm(formPost){

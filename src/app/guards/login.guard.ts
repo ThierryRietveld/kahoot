@@ -1,25 +1,31 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { DataService } from '../services/data.service';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class LoginGuard implements CanActivate {
 
-// ER GAAT HIER NOG VAN ALLES MIS
+  constructor(private data:DataService,private router:Router) {
 
-
-  constructor(private data:DataService) {
-
-    this.data.IsLoggedIn(function(loggedIn){
-      console.log(loggedIn);
-    });
   };
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    console.log("OnlyLoggedInUsers");
-    return this.data.IsLoggedIn(function(loggedIn){
-      return loggedIn;
+  canActivate(next:ActivatedRouteSnapshot, state:RouterStateSnapshot) {
+    
+    return this.data.IsLoggedIn()
+    .map(e => {
+      if (e[0]) {
+          return true;
+      } else {
+        this.router.navigate(['/login']);
+        return false;
+      }
+    }).catch(() => {
+        this.router.navigate(['/login']);
+        return Observable.of(false);
     });
-  }
+}   
 }
