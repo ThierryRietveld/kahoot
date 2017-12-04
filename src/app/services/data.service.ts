@@ -13,6 +13,9 @@ export class DataService {
   private isLoggedIn = false;
   private postData;
 
+
+  games = ['quiz'];
+
   LogIn(username, password) {
 
     this.postData = {
@@ -23,7 +26,7 @@ export class DataService {
     this.http.post('http://localhost:4201/login', this.postData)
     .subscribe(data => {
       console.log(data);
-      if (data) {
+      if(data) {
         console.log("logged in");
         localStorage.setItem('userId', data['id']);
         localStorage.setItem('userToken', data['token']);

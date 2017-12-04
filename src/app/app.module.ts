@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataService } from './services/data.service';
+import { SocketService } from './services/socket.service';
 import { LoginGuard } from './guards/login.guard';
 
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
@@ -16,6 +17,8 @@ import { LoginComponent } from './components/login/login.component';
 
 import { QuizHostComponent } from './components/games/quiz/quiz-host/quiz-host.component';
 import { QuizPlayerComponent } from './components/games/quiz/quiz-player/quiz-player.component';
+import { GamesComponent } from './components/games/games.component';
+import { MakeGameComponent } from './components/make-game/make-game.component';
 
 
 const appRoutes: Routes = [
@@ -25,6 +28,8 @@ const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'game', component: GamesComponent,
+  canActivate: [LoginGuard], },
 
   // { path: 'hero/:id',      component: HeroDetailComponent },
   // {
@@ -48,7 +53,9 @@ const appRoutes: Routes = [
     RegisterComponent,
     LoginComponent,
     QuizHostComponent,
-    QuizPlayerComponent
+    QuizPlayerComponent,
+    GamesComponent,
+    MakeGameComponent
   ],
   imports: [
     HttpClientModule,
@@ -62,6 +69,7 @@ const appRoutes: Routes = [
   ],
   providers: [ 
     DataService,
+    SocketService,
     LoginGuard
    ],
   bootstrap: [AppComponent]

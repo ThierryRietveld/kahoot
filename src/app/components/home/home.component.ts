@@ -22,7 +22,6 @@ export class HomeComponent implements OnInit {
   private socket;
 
   constructor(private dataService:DataService) { 
-    this.socket = io('http://localhost:4201', this.connectionOptions);
   }
   
 
