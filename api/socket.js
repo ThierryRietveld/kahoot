@@ -8,7 +8,7 @@ var rooms = {};
 io.on('connection', function(socket){
     
     connections.push(socket);
-
+    console.log('User connected');
     // Disconnect
     socket.on('disconnect', function(data){
         for(var i = 0;i < connections.length; i++){
@@ -21,7 +21,30 @@ io.on('connection', function(socket){
     });
 
     socket.on('makeNewGame',function(data){
-        console.log(data);
+        makeNewRoom(data, function(){
+            console.log("New room made");
+        });
+    });
+
+    function makeNewRoom(data, callback){
+        rooms[data.id] = {};
+        rooms[data.id]['players'] = {};
+        rooms[data.id]['data'] = {};
+        rooms[data.id]['data']['token'] = data.token;
+        rooms[data.id]['data']['game'] = data.game;
+        rooms[data.id]['data']['title'] = data.title;
+        console.log(rooms);
+        callback();
+    }
+
+    socket.on('connectToRoom', function(data, callback){
+        for(var key in rooms){
+            if(rooms[key]['data']['token'] == data.token){
+                socket.join(key);
+                rooms[key]['players'][data.id] = {};
+                callback(rooms[key]);
+            }
+        }
     });
 
     // New User

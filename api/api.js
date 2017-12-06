@@ -44,13 +44,13 @@ app.post('/login', function(req, res){
     let password = req.body.pass;
     con.query("SELECT * FROM Users WHERE `username` = '"+username+"' AND `password` = '"+sha1(password)+"'", function (err, result, fields) {
         if (err) throw err;
-        console.log(result);
+        // console.log(result);
         res.send(result[0]);
     });
 });
 
 app.post('/register', function(req, res){
-    console.log(req.body);
+    // console.log(req.body);
 
     let username = req.body.username;
     let firstname = req.body.firstname;
@@ -74,7 +74,7 @@ app.post('/register', function(req, res){
 app.post('/isloggedin',function(req,res){
     let id = req.body.id;
     let token = req.body.token;
-    console.log(req.body);
+    // console.log(req.body);
     con.query("SELECT * FROM Users WHERE id = "+id+" AND token = '"+token+"' ", function (err, result, fields) {
         if (err) throw err;
         res.send(result);
@@ -97,18 +97,15 @@ function makeid(callback) {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
 
-    con.query("SELECT id FROM Users", function (err, result, fields) {
+    con.query("SELECT id FROM Users WHERE id = '"+text+"' ", function (err, result, fields) {
         if (err) throw err;
-        console.log(result);
-        for(var i = 0;i < result.length; i++){
-            if(result[i].id == text){
-                console.log(text);
-                makeid();
-                duplicate = true;
-                return;
-            } 
-        }
-
+        // console.log(result);
+        if(result[i]){
+            console.log(text);
+            makeid();
+            duplicate = true;
+            return;
+        } 
         if(!duplicate) {
             callback(text);
         } 
@@ -122,6 +119,6 @@ function makeToken(callback) {
     for (var i = 0; i < 8; i++) {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
-    console.log(text);
+    // console.log(text);
     callback(text);
 }
