@@ -9,6 +9,5 @@ import { SocketService } from './services/socket.service';
 })
 export class AppComponent {
   constructor(private socket:SocketService){
-    
   }
 }

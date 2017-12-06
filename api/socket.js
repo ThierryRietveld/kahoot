@@ -8,17 +8,20 @@ var rooms = {};
 io.on('connection', function(socket){
     
     connections.push(socket);
-    console.log(connections);
 
     // Disconnect
     socket.on('disconnect', function(data){
-        for(var i = 0;i < placeholder.length; i++){
-            if(placeholder[i].name == socket.username){
-                placeholder.splice(i,1);
+        for(var i = 0;i < connections.length; i++){
+            if(connections[i].name == socket.username){
+                connections.splice(i,1);
             }
         }
         delete users[socket.username];
         connections.splice(connections.indexOf(socket),1);
+    });
+
+    socket.on('makeNewGame',function(data){
+        console.log(data);
     });
 
     // New User

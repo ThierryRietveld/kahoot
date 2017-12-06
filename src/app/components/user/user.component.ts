@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { DataService } from '../../services/data.service';
+import { SocketService } from '../../services/socket.service';
 
 
 @Component({
@@ -12,21 +13,41 @@ import { DataService } from '../../services/data.service';
 })
 export class UserComponent implements OnInit {
 
+  data = {
+    game:'quiz',
+    title:'De eerste quiz',
+    token: this.makeToken()+ '',
+    name:'klaas'//this.dataService.getUser().name
+  }
+
   constructor(private http: HttpClient,
-              private data:DataService
+              private dataService:DataService,
+              private socket:SocketService
             ) { }
   
   
   ngOnInit() {
-      this.data.saySomething('De service werkt gewoon!');
+      this.dataService.saySomething('De service werkt gewoon!');
   }
 
   logOut(){
-    this.data.logOut();
+    this.dataService.logOut();
   }
 
   makeNewGame(){
-    
+    console.log(this.data);
+    this.socket.makeNewGame(this.data);    
   }
+
+  makeToken() {
+    let text = "";
+    let possible = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    for (var i = 0; i < 8; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    console.log('GameToken: ' + text);
+    return text;
+}
 
 }

@@ -13,9 +13,15 @@ export class SocketService {
   };
 
   private socket;
+  private data;
 
   constructor() {
     this.socket = io('http://localhost:4201', this.connectionOptions);
+  }
+
+  makeNewGame(data){
+    this.data = data;
+    this.socket.emit('makeNewGame',this.data);
   }
 
 }

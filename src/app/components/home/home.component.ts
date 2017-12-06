@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { DataService } from '../../services/data.service';
+import { SocketService } from '../../services/socket.service';
 
 import * as io from "socket.io-client";
 
@@ -12,15 +13,8 @@ import * as io from "socket.io-client";
 })
 export class HomeComponent implements OnInit {
 
-  connectionOptions =  {
-    "force new connection" : true,
-    "reconnectionAttempts": "Infinity", //avoid having user reconnect manually in order to prevent dead clients after a server restart
-    "timeout" : 10000, //before connect_error and connect_timeout are emitted.
-    "transports" : ["websocket"]
-  };
   
-  private socket;
-
+  
   constructor(private dataService:DataService) { 
   }
   
@@ -28,5 +22,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
 
   }
+
+  
 
 }

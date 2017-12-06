@@ -13,6 +13,8 @@ export class DataService {
   private isLoggedIn = false;
   private postData;
 
+  private userData;
+
 
   games = ['quiz'];
 
@@ -28,6 +30,7 @@ export class DataService {
       console.log(data);
       if(data) {
         console.log("logged in");
+        this.userData = data;
         localStorage.setItem('userId', data['id']);
         localStorage.setItem('userToken', data['token']);
         this.router.navigate(["/home"]);
@@ -47,7 +50,9 @@ export class DataService {
     return res.json();
   }
 
-
+  getUser() {
+    return this.userData;
+  }
 
   IsLoggedIn() {
     
