@@ -32,7 +32,7 @@ const appRoutes: Routes = [
   canActivate: [LoginGuard], },
 
   // { path: 'hero/:id',      component: HeroDetailComponent },
-  // {
+  // { 
   //   path: 'heroes',
   //   component: HeroListComponent,
   //   data: { title: 'Heroes List' }
