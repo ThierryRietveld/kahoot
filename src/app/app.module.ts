@@ -23,13 +23,18 @@ import { MakeGameComponent } from './components/make-game/make-game.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: UserComponent,
-  canActivate: [LoginGuard], 
+  canActivate: [LoginGuard]
 },
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'game', component: GamesComponent,
-  canActivate: [LoginGuard], },
+  
+  { path: 'host', component: GamesComponent,
+  canActivate: [LoginGuard], 
+  children: [
+    {path: 'quiz', component: QuizHostComponent}
+  ]
+},
 
   // { path: 'hero/:id',      component: HeroDetailComponent },
   // { 

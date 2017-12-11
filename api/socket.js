@@ -23,6 +23,7 @@ io.on('connection', function(socket){
     socket.on('makeNewGame',function(data){
         makeNewRoom(data, function(){
             console.log("New room made");
+            socket.emit('newGameMade', data);
         });
     });
 

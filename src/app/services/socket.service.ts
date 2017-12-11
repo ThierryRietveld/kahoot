@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import * as Rx from 'rxjs/Rx';
 
 import * as io from "socket.io-client";
 
@@ -12,26 +15,37 @@ export class SocketService {
     "transports" : ["websocket"]
   };
 
-  private socket;
+  public socket;
   private data;
+  private dit;
 
-  constructor() {
+  constructor(public router:Router) {
     this.socket = io('http://localhost:4201', this.connectionOptions);
-    
+    this.socket.on('newGameMade', function(data){
+      console.log(this);
+      // Hier is 'this' niet defined
+      // navigateHere();
+    });
   }
 
   makeNewGame(data){
     this.data = data;
     this.data.id = this.socket.id;
-    this.socket.emit('makeNewGame',this.data);
+    this.socket.emit('makeNewGame', this.data);
+  }
+
+  navigateHere(route){
+    this.router.navigate([route]);
   }
 
   connectToRoom(thetoken){
     this.data = {id: this.socket.id,
                  token: thetoken};
+
     this.socket.emit('connectToRoom', this.data, function(room){
       console.log(room);
     });
   }
+  
 
 }
