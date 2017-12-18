@@ -2,10 +2,11 @@
 
 /* 
 
-    Probleemen:
+    Problemen:
 
     * Hij connect altijd 2 keer.
       Dus er zitten altijd 2 de zelfde personen in het connection array.
+      edit: soms doet hij dit wel en soms niet.
 
 */
 
@@ -21,14 +22,22 @@ io.on('connection', function (socket) {
 
     // Disconnect
     socket.on('disconnect', function (data) {
-        for (var i = 0; i < connections.length; i++) {
-            if (connections[i].name == socket.username) {
-                connections.splice(i, 1);
-            }
-        }
+
+
+        let playerInRoom = isPlayerInRoom();
+
+        if(playerInRoom) {
+            console.log(socket.id);
+            delete rooms.players[socket.id];
+            connections[connections.findIndex(x => x.id == playerInRoom)].emit('userOutRoom', socket.id);
+        };
+
         delete users[socket.username];
         connections.splice(connections.indexOf(socket), 1);
         console.log("User disconneted");
+
+        
+
     });
 
     socket.on('makeNewGame', function (data) {
@@ -49,13 +58,37 @@ io.on('connection', function (socket) {
         callback();
     }
 
+    function isPlayerInRoom(){
+        console.log(rooms);
+        let inRoom = false;
+        for(let room in rooms) {
+            for(let player in rooms[room]['players']){
+                if(socket.id == player){
+                    inRoom = room;
+                }
+            }
+        }
+        return inRoom;
+    }
+
     socket.on('connectToRoom', function (data, callback) {
         for (var key in rooms) {
             if (rooms[key]['data']['token'] == data.token) {
                 socket.join(key);
-                rooms[key]['players'][data.id] = {};
-                callback(rooms[key]);
+
+                rooms[key]['players'][data.id] = {name: data.name,
+                                                  score: 0};
+
+                connections[connections.findIndex(x => x.id == key)].emit('newUserInRoom', rooms[key]);
             }
+        }
+    });
+
+    socket.on('isHostValid', function(data, callback){
+        if(data.id in rooms){
+            callback(true);
+        } else {
+            callback(false);
         }
     });
 

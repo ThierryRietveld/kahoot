@@ -19,17 +19,12 @@ export class SocketService {
   private data;
   private dit;
 
+  public banaan = "53";
+
   constructor(public router: Router) {
 
     this.socket = io('http://localhost:4201', this.connectionOptions);
 
-    this.socket.on('newGameMade', function (data) {
-
-      console.log(this);
-      boi();
-      // Hier is 'this' niet defined
-      // navigateHere();
-    });
   }
 
   makeNewGame(data) {
@@ -46,11 +41,12 @@ export class SocketService {
     this.router.navigate([route]);
   }
 
-  connectToRoom(thetoken) {
+  connectToRoom(thetoken, thename) {
 
     this.data = {
       id: this.socket.id,
-      token: thetoken
+      token: thetoken,
+      name: thename
     };
 
     this.socket.emit('connectToRoom', this.data, function (room) {
@@ -58,12 +54,14 @@ export class SocketService {
     });
   }
 
+  isHostValid(callback){
+    this.data = {
+      'id': this.socket.id
+    }
+    this.socket.emit('isHostValid', this.data, function(bool){
+      callback(bool);
+    });
+  }
 
-}
 
-
-let socketService = new SocketService();
-
-function boi() {
-  socketService.saySomething('duihdfuihi');
 }

@@ -29,12 +29,9 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   
-  { path: 'host', component: GamesComponent,
-  canActivate: [LoginGuard], 
-  children: [
-    {path: 'quiz', component: QuizHostComponent}
-  ]
-},
+  { path: 'host/quiz',
+  component: QuizHostComponent,
+  canActivate: [LoginGuard] },
 
   // { path: 'hero/:id',      component: HeroDetailComponent },
   // { 

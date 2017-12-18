@@ -19,15 +19,22 @@ export class UserComponent implements OnInit {
     token: this.makeToken()+ '',
     name:'klaas'//this.dataService.getUser().name
   }
+  
 
   constructor(private http: HttpClient,
               private dataService:DataService,
-              private socket:SocketService
-            ) { }
+              private socket:SocketService) {
+                
+    let self = this;
+
+    this.socket.socket.on('newGameMade', function (data) {
+      self.dataService.navigateHere("/host/"+data.game);
+    });
+  }
   
   
   ngOnInit() {
-      this.dataService.saySomething('De service werkt gewoon!');
+    this.dataService.saySomething('De service werkt gewoon!');
   }
 
   logOut(){
@@ -48,6 +55,7 @@ export class UserComponent implements OnInit {
     }
     console.log('GameToken: ' + text);
     return text;
-}
+  }
 
 }
+

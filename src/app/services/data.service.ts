@@ -40,6 +40,10 @@ export class DataService {
     });
   }
 
+  navigateHere(route) {
+    this.router.navigate([route]);
+  }
+
   logOut(){
     localStorage.removeItem('userId');
     localStorage.removeItem('userToken');

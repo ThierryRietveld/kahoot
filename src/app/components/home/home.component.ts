@@ -15,6 +15,7 @@ import * as io from "socket.io-client";
 export class HomeComponent implements OnInit {
 
   token:string = '';
+  name:string = '';
   
   constructor(private dataService:DataService, private socket:SocketService) { 
   }
@@ -25,7 +26,10 @@ export class HomeComponent implements OnInit {
   }
 
   connectToRoom(){
-    this.socket.connectToRoom(this.token);
+
+    if(this.token != '' || this.name != ''){
+      this.socket.connectToRoom(this.token, this.name);
+    } 
   }
   
 
