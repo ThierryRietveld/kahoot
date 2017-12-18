@@ -28,7 +28,9 @@ io.on('connection', function (socket) {
 
         if(playerInRoom) {
             console.log(socket.id);
-            delete rooms.players[socket.id];
+
+            // Hier gaat nog vanalles fout
+            // delete rooms.players[socket.id];
             connections[connections.findIndex(x => x.id == playerInRoom)].emit('userOutRoom', socket.id);
         };
 
