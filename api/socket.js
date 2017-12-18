@@ -30,7 +30,8 @@ io.on('connection', function (socket) {
             console.log(socket.id);
 
             // Hier gaat nog vanalles fout
-            // delete rooms.players[socket.id];
+            console.log(rooms);
+            delete rooms[playerInRoom].players[socket.id];
             connections[connections.findIndex(x => x.id == playerInRoom)].emit('userOutRoom', socket.id);
         };
 
@@ -56,7 +57,6 @@ io.on('connection', function (socket) {
         rooms[data.id]['data']['token'] = data.token;
         rooms[data.id]['data']['game'] = data.game;
         rooms[data.id]['data']['title'] = data.title;
-        console.log(rooms);
         callback();
     }
 
