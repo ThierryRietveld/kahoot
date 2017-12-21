@@ -38,9 +38,6 @@ io.on('connection', function (socket) {
         delete users[socket.username];
         connections.splice(connections.indexOf(socket), 1);
         console.log("User disconneted");
-
-        
-
     });
 
     socket.on('makeNewGame', function (data) {
@@ -82,6 +79,7 @@ io.on('connection', function (socket) {
                                                   score: 0};
 
                 connections[connections.findIndex(x => x.id == key)].emit('newUserInRoom', rooms[key]);
+                callback(rooms[key]);
             }
         }
     });
@@ -92,6 +90,8 @@ io.on('connection', function (socket) {
         } else {
             callback(false);
         }
+
+        socket.emit('sendRoomData', rooms[socket.id]);
     });
 
     // New User

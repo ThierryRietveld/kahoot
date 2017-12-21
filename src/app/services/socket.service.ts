@@ -22,9 +22,10 @@ export class SocketService {
   public banaan = "53";
 
   constructor(public router: Router) {
-
+  
     this.socket = io('http://localhost:4201', this.connectionOptions);
-
+    
+    
   }
 
   makeNewGame(data) {
@@ -51,6 +52,7 @@ export class SocketService {
 
     this.socket.emit('connectToRoom', this.data, function (room) {
       console.log(room);
+      this.navigateHere("/player/"+room.data.game);
     });
   }
 

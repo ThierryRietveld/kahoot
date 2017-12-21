@@ -21,18 +21,23 @@ export class QuizHostComponent implements OnInit {
       }
 
     });
+
+    this.socket.socket.on('sendRoomData', function(data){
+      self.token = data.data.token;
+    });
     
     // New User in room
     this.socket.socket.on('newUserInRoom', function(data){
       console.log(data);
-      self.players = [];
+      
+      self.players = []; 
 
       for(let player in data.players){
         let dummyObject = {
           id: player,
           name: data.players[player].name,
           score: data.players[player].score
-        };
+        }
         self.players.push(dummyObject);
       }
 
@@ -46,6 +51,7 @@ export class QuizHostComponent implements OnInit {
     });
   }
 
+  token = '';
   players = [];
 
   ngOnInit() {

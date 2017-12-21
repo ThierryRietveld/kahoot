@@ -33,6 +33,9 @@ const appRoutes: Routes = [
   component: QuizHostComponent,
   canActivate: [LoginGuard] },
 
+  { path: 'player/quiz',
+  component: QuizPlayerComponent },
+
   // { path: 'hero/:id',      component: HeroDetailComponent },
   // { 
   //   path: 'heroes',
