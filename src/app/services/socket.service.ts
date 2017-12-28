@@ -50,9 +50,11 @@ export class SocketService {
       name: thename
     };
 
+    let self = this;
+    
+
     this.socket.emit('connectToRoom', this.data, function (room) {
-      console.log(room);
-      this.navigateHere("/player/"+room.data.game);
+      self.router.navigate(["/player/"+room.data.game]);
     });
   }
 
@@ -64,6 +66,28 @@ export class SocketService {
       callback(bool);
     });
   }
+
+  isPlayerValid(callback){
+    this.data = {
+      'id': this.socket.id
+    }
+
+    let self = this;
+
+    this.socket.emit('isPlayerValid', this.data, function(data){
+      callback(data);
+      if(!data){
+        self.navigateHere('');
+      };
+    });
+  }
+
+  startGame(){
+    console.log("bdashjsdbajdasgyufa");
+    this.socket.emit('gameStart');
+  }
+
+
 
 
 }

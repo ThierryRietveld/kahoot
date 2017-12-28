@@ -94,6 +94,23 @@ io.on('connection', function (socket) {
         socket.emit('sendRoomData', rooms[socket.id]);
     });
 
+    socket.on('isPlayerValid', function(data, callback){
+        let isPlayerValid = false;
+        for(let room in rooms){
+            for(let player in rooms[room].players){
+                if(data.id == player){
+                    isPlayerValid = true;
+                }
+            }
+        }
+        callback(isPlayerValid);
+    });
+
+    socket.on('gameStart', function(){
+        console.log(rooms);
+        socket.in(socket.id).emit('gameGestart');
+    });
+
     // New User
     // socket.on('new user', function(data, callback){
     //     callback(true,data);

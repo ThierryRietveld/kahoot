@@ -1,5 +1,7 @@
 <h1>The game token: {{token}}</h1>
 
+<button (click)="startGame()">Start Game!</button>
+
 Players:
 <ul>
   <li *ngFor="let player of players">{{player.name}}</li>

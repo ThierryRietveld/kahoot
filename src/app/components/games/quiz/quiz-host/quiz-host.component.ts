@@ -57,4 +57,8 @@ export class QuizHostComponent implements OnInit {
   ngOnInit() {
   }
 
+  startGame(){
+    this.socket.startGame();
+  };
+
 }
