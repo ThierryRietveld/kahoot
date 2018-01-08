@@ -11,11 +11,20 @@ import { SocketService } from '../../../../services/socket.service';
 export class QuizPlayerComponent implements OnInit {
 
   constructor(private socket:SocketService, private data:DataService  ) {
+
+    let self = this;
+
     this.socket.isPlayerValid(function(data){
     });
 
     this.socket.socket.on('gameGestart', function(){
       console.log('De game is gestart');
+
+    });
+
+    this.socket.socket.on('hostDisconnected', function(){
+      alert('the host disconnected');
+      self.socket.navigateHere('/');
     });
 
    }

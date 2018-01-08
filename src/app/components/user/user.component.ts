@@ -17,7 +17,13 @@ export class UserComponent implements OnInit {
     game:'quiz',
     title:'De eerste quiz',
     token: this.makeToken()+ '',
-    name:'klaas'//this.dataService.getUser().name
+    name:'klaas',//this.dataService.getUser().name
+    gameData: {
+      questions: [
+        {question: 'Wat is kaas?', choices: ['Dat weet je zelf','Zeg ik niet','Zowiezo 53','Paars zoals mn kluts'], answer: 2},
+        {question: 'Staat de eifeltoren in Nederland?', choices: ['JA','Ik ging er met de trein heen dus zal wel kennen','Wat is dat?','Natte tena krijg ik er van!'], answer: 1}
+      ]
+    }
   }
   
 

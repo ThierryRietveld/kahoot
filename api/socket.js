@@ -26,14 +26,23 @@ io.on('connection', function (socket) {
 
         let playerInRoom = isPlayerInRoom();
 
-        if(playerInRoom) {
-            console.log(socket.id);
+        let playerIsHost = isPlayerHost();
 
-            // Hier gaat nog vanalles fout
+        if(playerInRoom) {
+
             console.log(rooms);
+            console.log(socket);
+            socket.leave(playerInRoom + "_room");
             delete rooms[playerInRoom].players[socket.id];
             connections[connections.findIndex(x => x.id == playerInRoom)].emit('userOutRoom', socket.id);
-        };
+        }
+
+        if(playerIsHost){
+            for(let player in rooms[socket.id].players){
+                connections[connections.findIndex(x => x.id == player)].emit('hostDisconnected');
+            }
+            delete rooms[socket.id];
+        }
 
         delete users[socket.username];
         connections.splice(connections.indexOf(socket), 1);
@@ -54,6 +63,7 @@ io.on('connection', function (socket) {
         rooms[data.id]['data']['token'] = data.token;
         rooms[data.id]['data']['game'] = data.game;
         rooms[data.id]['data']['title'] = data.title;
+        rooms[data.id]['data']['gameData'] = data.gameData;
         callback();
     }
 
@@ -70,10 +80,21 @@ io.on('connection', function (socket) {
         return inRoom;
     }
 
+    function isPlayerHost(){
+        let isPlayerHost = false;
+        for(let room in rooms){
+            if(room == socket.id){
+                isPlayerHost = true;
+            }
+        }
+
+        return isPlayerHost;
+    }
+
     socket.on('connectToRoom', function (data, callback) {
         for (var key in rooms) {
             if (rooms[key]['data']['token'] == data.token) {
-                socket.join(key);
+                socket.join(key + "_room");
 
                 rooms[key]['players'][data.id] = {name: data.name,
                                                   score: 0};
@@ -107,8 +128,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on('gameStart', function(){
-        console.log(rooms);
-        socket.in(socket.id).emit('gameGestart');
+        socket.in(socket.id + "_room").emit('gameGestart');
     });
 
     // New User

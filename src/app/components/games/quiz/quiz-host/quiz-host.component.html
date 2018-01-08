@@ -1,9 +1,25 @@
-<h1>The game token: {{token}}</h1>
+<div id="quiz-host-lobby">
+  <h1>The game token: {{room.data.token}}</h1>
+  
+  <button (click)="startGame()">Start Game!</button>
+  
+  Players:
+  <ul>
+    <li *ngFor="let player of players">{{player.name}}</li>
+  </ul>
+</div>
 
-<button (click)="startGame()">Start Game!</button>
+<div id="quiz-host-questions">
+  <div class="question">
+    <h1>{{question}}</h1>
+  </div>
 
-Players:
-<ul>
-  <li *ngFor="let player of players">{{player.name}}</li>
-</ul>
+  <div id="answer">
+    <!-- Deze moet ge-ng-for'ed worden -->
+    <div class="asnwers" >
+
+    </div>
+  </div>
+</div>
+
 
