@@ -58,7 +58,7 @@ export class SocketService {
         self.router.navigate(["/player/"+room.data.game]);
       } else {
         self.router.navigate([""]);
-        alert('Room is al gestart.');
+        alert('Room is al gestart.s');
       }
       
     });
