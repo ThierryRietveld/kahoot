@@ -6,7 +6,7 @@
 
     * Hij connect altijd 2 keer.
       Dus er zitten altijd 2 de zelfde personen in het connection array.
-      edit: soms doet hij dit wel en soms niet.
+      edit: soms doet hij dit wel en soms niet en het zit waarschijnlijk in de socket.io dus lastig op te lossen.
 
 */
 
@@ -30,8 +30,6 @@ io.on('connection', function (socket) {
 
         if(playerInRoom) {
 
-            console.log(rooms);
-            console.log(socket);
             socket.leave(playerInRoom + "_room");
             delete rooms[playerInRoom].players[socket.id];
             connections[connections.findIndex(x => x.id == playerInRoom)].emit('userOutRoom', socket.id);
@@ -64,6 +62,7 @@ io.on('connection', function (socket) {
         rooms[data.id]['data']['game'] = data.game;
         rooms[data.id]['data']['title'] = data.title;
         rooms[data.id]['data']['gameData'] = data.gameData;
+        rooms[data.id]['data']['isStarted'] = false;
         callback();
     }
 
@@ -93,14 +92,21 @@ io.on('connection', function (socket) {
 
     socket.on('connectToRoom', function (data, callback) {
         for (var key in rooms) {
+
             if (rooms[key]['data']['token'] == data.token) {
-                socket.join(key + "_room");
 
-                rooms[key]['players'][data.id] = {name: data.name,
-                                                  score: 0};
+                if(rooms[key]['data']['isStarted'] == false){
+                    socket.join(key + "_room");
+                    
+                    rooms[key]['players'][data.id] = {name: data.name,
+                                                      score: 0};
+    
+                    connections[connections.findIndex(x => x.id == key)].emit('newUserInRoom', rooms[key]);
+                    callback(rooms[key], false);
 
-                connections[connections.findIndex(x => x.id == key)].emit('newUserInRoom', rooms[key]);
-                callback(rooms[key]);
+                } else {
+                    callback('', true);
+                }
             }
         }
     });
@@ -129,6 +135,7 @@ io.on('connection', function (socket) {
 
     socket.on('gameStart', function(){
         socket.in(socket.id + "_room").emit('gameGestart');
+        rooms[socket.id]['data']['isStarted'] = true;
     });
 
     // New User

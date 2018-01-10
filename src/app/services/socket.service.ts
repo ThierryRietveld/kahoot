@@ -25,7 +25,6 @@ export class SocketService {
   
     this.socket = io('http://localhost:4201', this.connectionOptions);
     
-    
   }
 
   makeNewGame(data) {
@@ -53,8 +52,15 @@ export class SocketService {
     let self = this;
     
 
-    this.socket.emit('connectToRoom', this.data, function (room) {
-      self.router.navigate(["/player/"+room.data.game]);
+    this.socket.emit('connectToRoom', this.data, function (room, isStarted) {
+      
+      if(!isStarted){
+        self.router.navigate(["/player/"+room.data.game]);
+      } else {
+        self.router.navigate([""]);
+        alert('Room is al gestart.');
+      }
+      
     });
   }
 
@@ -77,13 +83,12 @@ export class SocketService {
     this.socket.emit('isPlayerValid', this.data, function(data){
       callback(data);
       if(!data){
-        self.navigateHere('');
+        self.navigateHere(['']);
       };
     });
   }
 
   startGame(){
-    console.log("bdashjsdbajdasgyufa");
     this.socket.emit('gameStart');
   }
 

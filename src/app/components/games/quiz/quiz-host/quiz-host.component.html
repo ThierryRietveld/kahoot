@@ -1,4 +1,4 @@
-<div id="quiz-host-lobby">
+<div *ngIf="quiz_host_lobby" id="quiz-host-lobby">
   <h1>The game token: {{room.data.token}}</h1>
   
   <button (click)="startGame()">Start Game!</button>
@@ -9,15 +9,15 @@
   </ul>
 </div>
 
-<div id="quiz-host-questions">
+<div *ngIf="quiz_host_questions" id="quiz-host-questions">
   <div class="question">
     <h1>{{question}}</h1>
   </div>
 
   <div id="answer">
     <!-- Deze moet ge-ng-for'ed worden -->
-    <div class="asnwers" >
-
+    <div class="asnwers" *ngFor="let awnser of awnsers">
+      {{awnser}}
     </div>
   </div>
 </div>

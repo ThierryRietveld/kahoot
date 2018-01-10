@@ -12,9 +12,12 @@ export class QuizPlayerComponent implements OnInit {
 
   constructor(private socket:SocketService, private data:DataService  ) {
 
+
+
     let self = this;
 
     this.socket.isPlayerValid(function(data){
+
     });
 
     this.socket.socket.on('gameGestart', function(){

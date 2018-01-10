@@ -20,12 +20,11 @@ export class UserComponent implements OnInit {
     name:'klaas',//this.dataService.getUser().name
     gameData: {
       questions: [
-        {question: 'Wat is kaas?', choices: ['Dat weet je zelf','Zeg ik niet','Zowiezo 53','Paars zoals mn kluts'], answer: 2},
+        {question: 'Wat is kaas?', choices: ['Dat weet je zelf','Zeg ik niet','Zowiezo 53','Paars zoals mn kechs'], answer: 2},
         {question: 'Staat de eifeltoren in Nederland?', choices: ['JA','Ik ging er met de trein heen dus zal wel kennen','Wat is dat?','Natte tena krijg ik er van!'], answer: 1}
       ]
     }
   }
-  
 
   constructor(private http: HttpClient,
               private dataService:DataService,
@@ -37,7 +36,6 @@ export class UserComponent implements OnInit {
       self.dataService.navigateHere("/host/"+data.game);
     });
   }
-  
   
   ngOnInit() {
     this.dataService.saySomething('De service werkt gewoon!');
@@ -53,6 +51,7 @@ export class UserComponent implements OnInit {
   }
 
   makeToken() {
+    
     let text = "";
     let possible = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 

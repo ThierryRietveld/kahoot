@@ -9,6 +9,11 @@ import { SocketService } from '../../../../services/socket.service';
   styleUrls: ['./quiz-host.component.css']
 })
 export class QuizHostComponent implements OnInit {
+  question ="banaan";
+  awnsers:any = [];
+
+  quiz_host_lobby = true;
+  quiz_host_questions = false;
 
   constructor(private data:DataService,
               private socket:SocketService) {
@@ -53,14 +58,25 @@ export class QuizHostComponent implements OnInit {
   }
 
   players = [];
-
-  room = {data: {token :''}};
+  questionNumber = 0;
+  room = {data: {token :'',gameData: {questions:[{question:'', choices: []}]}}};
 
   ngOnInit() {
   }
 
   startGame(){
     this.socket.startGame();
+    this.quiz_host_lobby = false;
+    this.quiz_host_questions = true;
+    this.displayNextQuestion();
   };
+
+  displayNextQuestion() {
+    
+    this.question = this.room.data.gameData.questions[this.questionNumber].question;
+    this.awnsers = this.room.data.gameData.questions[this.questionNumber].choices;
+    this.questionNumber++;
+
+  }
 
 }
