@@ -51,11 +51,11 @@ export class UserComponent implements OnInit {
   }
 
   makeToken() {
-    
+
     let text = "";
     let possible = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    for (var i = 0; i < 8; i++) {
+    for (var i = 0; i < 5; i++) {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     console.log('GameToken: ' + text);
