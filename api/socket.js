@@ -138,6 +138,10 @@ io.on('connection', function (socket) {
         rooms[socket.id]['data']['isStarted'] = true;
     });
 
+    socket.on('choiceMade', function(){
+        console.log('iets');
+    });
+
     // New User
     // socket.on('new user', function(data, callback){
     //     callback(true,data);

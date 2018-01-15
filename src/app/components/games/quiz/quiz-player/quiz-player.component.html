@@ -1,3 +1,20 @@
-<p>
-  Waiting for host to start the game.
-</p>
+<div id="waiting" *ngIf="waiting">
+  <p>
+    Waiting for host to start the game.
+  </p>
+</div>
+
+<div id="game" *ngIf="game">
+
+  <div id="head">
+    <!-- Geen idee wat ik hier wil de naam van de speler of zo, of de score -->
+  </div>
+
+  <div class="choices">
+      <button id="1" class="choice" (click)="clickChoice(1)">1</button>
+      <button id="2" class="choice" (click)="clickChoice(2)">2</button>
+      <button id="3" class="choice" (click)="clickChoice(3)">3</button>
+      <button id="4" class="choice" (click)="clickChoice(4)">4</button>
+  </div>
+  
+</div>

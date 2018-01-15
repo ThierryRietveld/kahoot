@@ -10,19 +10,23 @@ import { SocketService } from '../../../../services/socket.service';
 })
 export class QuizPlayerComponent implements OnInit {
 
+  waiting = true;
+  game = false;
+
+  send;
+
   constructor(private socket:SocketService, private data:DataService  ) {
-
-
 
     let self = this;
 
     this.socket.isPlayerValid(function(data){
-
+      console.log(data);
     });
 
     this.socket.socket.on('gameGestart', function(){
       console.log('De game is gestart');
-
+      self.waiting = false;
+      self.game = true;
     });
 
     this.socket.socket.on('hostDisconnected', function(){
@@ -30,7 +34,16 @@ export class QuizPlayerComponent implements OnInit {
       self.socket.navigateHere('/');
     });
 
-   }
+  }
+
+  clickChoice(choice){
+    console.log(choice);
+    this.send = {
+      choice: choice
+    }
+
+    this.socket.socket.emit('choiceMade', this.send);
+  }
 
   ngOnInit() {
   }
